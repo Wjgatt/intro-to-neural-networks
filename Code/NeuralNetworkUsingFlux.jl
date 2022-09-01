@@ -13,7 +13,8 @@ function mainFlux()
     xRange = (min = -1.0, max = 1.0) # Range of input values x for which we would like to learn f(x)
     
     # Generate a sample of trainingData
-    sampleSize = 100
+    sampleSize = 30
+    # sampleSize = 100
     rawInputs = [[(xRange.max - xRange.min) * rand() + xRange.min] for ii in 1:sampleSize] # Draw inputs from uniform distribtuion
     rawOutputs = [[f(rawInputs[ii]...)] for ii in 1:sampleSize] # Compute outputs for each input
     trainingData = zip(rawInputs, rawOutputs) # Initialize training dataset for stochastic gradient descent (creates an iterator of tuples with inputs and outputs)
@@ -53,11 +54,11 @@ function mainFlux()
     ps = Flux.params(model)
 
     # Train the neural network 
-    epochs = 1000
+    epochs = 10000
     showProgress = true
     opt = Descent(0.01) # learning rate
     trainingLosses = zeros(epochs) # Initialize vectors to keep track of training
-    p = Progress(epochs; desc = "Training...", color = :grey, barlen = 0) # Creates a progress bar
+    p = Progress(epochs; desc = "Training...", color = :grey, barlen = 10) # Creates a progress bar
     
     @time for ii in 1:epochs
         
